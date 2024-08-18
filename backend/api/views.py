@@ -17,7 +17,6 @@ from rest_framework import generics
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.authentication import BasicAuthentication
 
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
@@ -36,7 +35,6 @@ class myTokenObtainPairView(TokenObtainPairView):
 
 class RegisterView(generics.CreateAPIView):
     queryset = api_models.User.objects.all()
-    authentication_classes = [BasicAuthentication]
     permission_classes = (AllowAny,)
     serializer_class = api_serializer.RegisterSerializer
 
@@ -50,4 +48,20 @@ class ProfileView(generics.RetrieveUpdateAPIView):
         profile = api_models.Profile.objects.get(user=user)
         return profile
     
+class CategoryListAPIView(generics.ListAPIView):
+    
+    serializer_class = api_serializer.CategorySerializer
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        return api_models.Category.objects.all()
+    
+class PostCategoryListAPIView(generics.ListAPIView):
+    serializer_class = api_serializer.PostSerializer
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        category_slug = self.kwargs['category_slug']
+        category = api_models.Category.objects.get(slug= category_slug)
+        return api_models.Post.objects.filter(category=category,status="Active")
 
