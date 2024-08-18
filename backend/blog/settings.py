@@ -77,6 +77,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            "builtins": ["api.templatetags.customtags"],
         },
     },
 ]
@@ -148,6 +149,10 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication'
     )
 }
+
+# Custom User Model
+
+AUTH_USER_MODEL = 'api.User'
 
 # JWT
 
