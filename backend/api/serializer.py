@@ -1,9 +1,9 @@
 from django.contrib.auth.password_validation import validate_password
-from rest_framework_simplejwt.serializers import TokenobtainPairSerializer
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
 from .models import *
 
-class myTokenobtainPairSerializer(TokenobtainPairSerializer):
+class myTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls,user):
         token = super().get_token(user)
@@ -18,12 +18,12 @@ class RegisterSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(write_only=True,required=True)
 
     class Meta:
-        models = User
-        fields = ['full_name','email','password','password2']
+        model = User
+        fields = ('full_name', 'email',  'password', 'password2')
 
     def validate(self,attr):
         if attr['password'] != attr['password2']:
-            raise serializers.ValidationError({'Password':'Password field didnot match'})
+            raise serializers.ValidationError({"password": "Password fields didn't match."})
         
         return attr
     
@@ -33,10 +33,10 @@ class RegisterSerializer(serializers.ModelSerializer):
             email = validated_data['email']
         )
 
-        email_username = user.email.split("@")
+        email_username = user.email.split('@')
         user.username = email_username
 
-        user.set_password(validate_password['password'])
+        user.set_password(validated_data['password'])
         user.save()
 
         return user
