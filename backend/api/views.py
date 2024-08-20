@@ -33,10 +33,12 @@ from api import models as api_models
 class myTokenObtainPairView(TokenObtainPairView):
     serializer_class = api_serializer.myTokenObtainPairSerializer    
 
+
 class RegisterView(generics.CreateAPIView):
     queryset = api_models.User.objects.all()
     permission_classes = (AllowAny,)
     serializer_class = api_serializer.RegisterSerializer
+
 
 class ProfileView(generics.RetrieveUpdateAPIView):
     permission_classes = [AllowAny]
@@ -48,6 +50,7 @@ class ProfileView(generics.RetrieveUpdateAPIView):
         profile = api_models.Profile.objects.get(user=user)
         return profile
     
+
 class CategoryListAPIView(generics.ListAPIView):
     
     serializer_class = api_serializer.CategorySerializer
@@ -56,6 +59,7 @@ class CategoryListAPIView(generics.ListAPIView):
     def get_queryset(self):
         return api_models.Category.objects.all()
     
+
 class PostCategoryListAPIView(generics.ListAPIView):
     serializer_class = api_serializer.PostSerializer
     permission_classes = [AllowAny]
@@ -85,6 +89,7 @@ class PostDetailsAPIView(generics.RetrieveAPIView):
         post.save()
         return post
 
+
 class LikePostAPIView(APIView):
     @swagger_auto_schema(
         request_body=openapi.Schema(
@@ -113,7 +118,8 @@ class LikePostAPIView(APIView):
                 type="Like"
             )
             return Response({"message": "Post Liked"}, status=status.HTTP_201_CREATED)
-        
+
+
 class PostCommentAPIView(APIView):
     @swagger_auto_schema(
         request_body=openapi.Schema(
@@ -147,6 +153,7 @@ class PostCommentAPIView(APIView):
             )
 
         return Response({"message": "Comment Sent"}, status=status.HTTP_201_CREATED)
+
 
 class BookmarkPostAPIView(APIView):
     @swagger_auto_schema(
@@ -182,6 +189,7 @@ class BookmarkPostAPIView(APIView):
             )
             return Response({"message": "Post Bookmarked"}, status=status.HTTP_201_CREATED)
 
+
 class DashboardStats(generics.ListAPIView):
     serializer_class = api_serializer.AuthorSerializer
     permission_classes = [AllowAny]
@@ -207,6 +215,7 @@ class DashboardStats(generics.ListAPIView):
         serializer = self.get_serializer(queryset,many=True)
         return Response(serializer.data)
 
+
 class DashboardPostLists(generics.ListAPIView):
     serializer_class = api_serializer.PostSerializer
     permission_classes = [AllowAny]
@@ -215,7 +224,8 @@ class DashboardPostLists(generics.ListAPIView):
         user_id = self.kwargs['user_id']
         user = api_models.User.objects.get(id=user_id)
         return api_models.Post.objects.filter(user=user).order_by("-id")
-    
+
+
 class DashboardCommentsLists(generics.ListAPIView):
     serializer_class = api_serializer.CommentSerializer
     permission_classes = [AllowAny]
@@ -224,7 +234,8 @@ class DashboardCommentsLists(generics.ListAPIView):
         user_id = self.kwargs['user_id']
         user = api_models.User.objects.get(id=user_id)
         return api_models.Comment.objects.filter(post__user=user)
-    
+
+
 class DashboardNotificationLists(generics.ListAPIView):
     serializer_class = api_serializer.NotificationSerializer
     permission_classes = [AllowAny]
@@ -233,6 +244,7 @@ class DashboardNotificationLists(generics.ListAPIView):
         user_id = self.kwargs['user_id']
         user = api_models.User.objects.get(id=user_id)
         return api_models.Notification.objects.filter(seen=False,user=user)
+
 
 class DashboardMarkNotificationAsSeen(APIView):
     @swagger_auto_schema(
@@ -251,6 +263,7 @@ class DashboardMarkNotificationAsSeen(APIView):
         noti.save()
 
         return Response({"message": "Notification Marked As Seen"}, status=status.HTTP_200_OK)
+
 
 class DashboardReplyCommentAPIView(APIView):
     @swagger_auto_schema(
@@ -302,4 +315,36 @@ class DashboardPostCreateAPIView(generics.CreateAPIView):
         return Response({"message": "Post Created Successfully"}, status=status.HTTP_201_CREATED)
 
 
+class DashboardPostEditAPIView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = api_serializer.PostSerializer
+    permission_classes = [AllowAny]
+
+    def get_object(self):
+        user_id = self.kwargs['user_id']
+        post_id = self.kwargs['post_id']
+        user = api_models.User.objects.get(id=user_id)
+        return api_models.Post.objects.get(user=user,id=post_id)
+
+    def update(self,request,*args, **kwargs):
+        post_instance = self.get_object()
+
+        title = request.data.get('title')
+        image = request.data.get('image')
+        description = request.data.get('description')
+        tags = request.data.get('tags')
+        category_id = request.data.get('category')
+        post_status = request.data.get('post_status')
+
+        category = api_models.Category.objects.get(id=category_id)
+
+        post_instance.title = title
+        if image != "undefined":
+            post_instance.image = image
+        post_instance.description = description
+        post_instance.tags = tags
+        post_instance.category = category
+        post_instance.status = post_status
+        post_instance.save()
+
+        return Response({"message": "Post Updated Successfully"}, status=status.HTTP_200_OK)
 

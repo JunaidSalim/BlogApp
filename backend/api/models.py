@@ -89,6 +89,7 @@ class Post(models.Model):
     profile = models.ForeignKey(to=Profile,on_delete=models.CASCADE,blank=True,null=True)
     category = models.ForeignKey(to=Category,blank=True,null=True,on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
+    tags = models.CharField(max_length=100,null=True,blank=True)
     description = models.TextField(null=True,blank=True)
     image = models.FileField(upload_to="image",null=True,blank=True)
     status = models.CharField(choices=STATUS_CHOICES,max_length=100,default="Active")
