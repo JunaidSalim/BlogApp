@@ -73,7 +73,7 @@ class Category(models.Model):
         super(Category,self).save(*args, **kwargs)
     
     def post_count(self):
-        return Post.objects.filter(category = self).count()
+        return Post.objects.filter(category=self).count()
 
     class Meta:
         verbose_name_plural = "Categories"
