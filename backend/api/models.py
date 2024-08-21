@@ -111,6 +111,9 @@ class Post(models.Model):
 
         super(Post,self).save(*args, **kwargs)
 
+    def comments(self):
+        return Comment.objects.filter(post=self)
+
 class Comment(models.Model):
     post = models.ForeignKey(to=Post,on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
