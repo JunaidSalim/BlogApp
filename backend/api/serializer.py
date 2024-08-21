@@ -57,7 +57,15 @@ class CategorySerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Category
-        fields = "__all__"
+        fields = ['id', 'title', 'image', 'slug', 'post_count']
+    
+    def __init__(self, *args, **kwargs):
+        super(CategorySerializer, self).__init__(*args, **kwargs)
+        request = self.context.get('request')
+        if request and request.method == 'POST':
+            self.Meta.depth = 0
+        else:
+            self.Meta.depth = 3
 
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
