@@ -12,7 +12,7 @@ function Notifications() {
     const userId = useUserData()?.user_id;
 
     const fetchNoti = async () => {
-        const response = await apiInstance.get(`author/dashboard/noti-list/${userId}/`);
+        const response = await apiInstance.get(`author/dashboard/notification-list/${userId}/`);
         setNoti(response.data);
     };
 
@@ -21,7 +21,7 @@ function Notifications() {
     }, []);
 
     const handleMarkNotiAsSeen = async (notiId) => {
-        const response = await apiInstance.post("author/dashboard/noti-mark-seen/", { noti_id: notiId });
+        const response = await apiInstance.post("author/dashboard/notification-mark-as-seen/", { noti_id: notiId });
         console.log(response.data);
         Toast("success", "Notification Seen", "");
         fetchNoti();

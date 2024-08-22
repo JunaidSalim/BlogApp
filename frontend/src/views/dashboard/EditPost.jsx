@@ -18,7 +18,7 @@ function EditPost() {
     const param = useParams();
 
     const fetchPost = async () => {
-        const response = await apiInstance.get(`author/dashboard/post-detail/${userId}/${param.id}/`);
+        const response = await apiInstance.get(`author/dashboard/update-post/${userId}/${param.id}/`);
         setEditPost(response.data);
     };
 
@@ -87,7 +87,7 @@ function EditPost() {
         formdata.append("category", post.category.id);
         formdata.append("post_status", post.status);
         try {
-            const response = await apiInstance.patch(`author/dashboard/post-detail/${userId}/${param.id}/`, formdata, {
+            const response = await apiInstance.patch(`author/dashboard/update-post/${userId}/${param.id}/`, formdata, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },

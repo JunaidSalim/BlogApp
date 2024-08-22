@@ -11,8 +11,10 @@ function Category() {
     const param = useParams();
 
     const fetchPosts = async () => {
-        const response = await apiInstance.get(`post/category/posts/${param.slug}/`);
+        const response = await apiInstance.get(`post/category/posts/${param.slug}`);
+        console.log(response.data)
         setPosts(response.data);
+      
     };
     useEffect(() => {
         fetchPosts();
@@ -38,7 +40,8 @@ function Category() {
                                 <img src="assets/images/adv-3.png" alt="" />
                             </a>
                             <h2 className="text-start d-block mt-1">
-                                <i className="bi bi-grid-fill"></i> {posts[0]?.category?.title} (16 Articles)
+                                <i className="bi bi-grid-fill"></i> {posts[0]?.category?.title} (
+                                    {posts.length} Articles)
                             </h2>
                         </div>
                     </div>
@@ -57,7 +60,7 @@ function Category() {
                                     <div className="card-body px-3 pt-3">
                                         <h4 className="card-title">
                                             <Link to={`${p.slug}`} className="btn-link text-reset stretched-link fw-bold text-decoration-none">
-                                                {p.title?.slice(0, 32) + "..."}
+                                            {p.title?.length > 32 ? p.title.slice(0, 32) + "..." : p.title}
                                             </Link>
                                         </h4>
                                         <ul className="mt-3 list-style-none" style={{ listStyle: "none" }}>
@@ -70,7 +73,7 @@ function Category() {
                                                 <i className="fas fa-calendar"></i> {moment(p.date).format("DD MMM, YYYY")}
                                             </li>
                                             <li className="mt-2">
-                                                <i className="fas fa-eye"></i> {p.view} Views
+                                                <i className="fas fa-eye"></i> {p.views} Views
                                             </li>
                                         </ul>
                                     </div>

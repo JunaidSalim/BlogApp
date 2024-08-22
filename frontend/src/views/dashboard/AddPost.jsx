@@ -84,13 +84,11 @@ function AddPost() {
         formdata.append("category", post.category);
         formdata.append("post_status", post.status);
         try {
-            const response = await apiInstance.post("author/dashboard/post-create/", formdata, {
+            const response = await apiInstance.post("author/dashboard/create-post/", formdata, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
             });
-            console.log(response.data);
-            console.log("Post Create");
             setIsLoading(false);
             Swal.fire({
                 icon: "success",
@@ -98,7 +96,6 @@ function AddPost() {
             });
             navigate("/posts/");
         } catch (error) {
-            console.log(error);
             setIsLoading(false);
         }
     };
@@ -174,7 +171,7 @@ function AddPost() {
                                                 <small>A brief summary of your posts.</small>
                                             </div>
                                             <label className="form-label">Tags</label>
-                                            <input onChange={handleCreatePostChange} name="tags" className="form-control" type="text" placeholder="health, medicine, fitness" />
+                                            <input onChange={handleCreatePostChange} name="tags" className="form-control" type="text" placeholder="health medicine fitness" />
 
                                             <div className="mb-3">
                                                 <label className="form-label">Status</label>

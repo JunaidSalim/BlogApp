@@ -54,6 +54,7 @@ function Header() {
                                     </li>
                                 </ul>
                             </li>
+                            {isLoggedIn() ? (
                             <li className="nav-item dropdown">
                                 <a className="nav-link dropdown-toggle active" href="#" id="pagesMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Dashboard
@@ -90,7 +91,7 @@ function Header() {
                                         </Link>
                                     </li>
                                 </ul>
-                            </li>
+                            </li>):null}
                             <li className="nav-item">
                                 {isLoggedIn() ? (
                                     <>

@@ -7,6 +7,7 @@ import axios from "./axios";
 // Importing jwt_decode to decode JSON Web Tokens
 import jwt_decode from "jwt-decode";
 
+
 // Importing the Cookies library to handle browser cookies
 import Cookies from "js-cookie";
 
@@ -48,7 +49,7 @@ export const login = async (email, password) => {
         // Handling errors and returning data and error information
         return {
             data: null,
-            error: error.response.data?.detail || "Something went wrong",
+            error: error.response?.data?.detail || "Something went wrong",
         };
     }
 };
@@ -79,7 +80,7 @@ export const register = async (full_name, email, password, password2) => {
         // Handling errors and returning data and error information
         return {
             data: null,
-            error: error.response.data || "Something went wrong",
+            error: error.response?.data?.detail || "Something went wrong",
         };
     }
 };

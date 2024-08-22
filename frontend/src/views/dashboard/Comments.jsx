@@ -12,9 +12,9 @@ import Toast from "../../plugin/Toast";
 function Comments() {
     const [comments, setComments] = useState([]);
     const [reply, setReply] = useState("");
-
+    const userId = useUserData()?.user_id;
     const fetchComment = async () => {
-        const response = await apiInstance.get(`author/dashboard/comment-list/`);
+        const response = await apiInstance.get(`author/dashboard/comment-list/${userId}/`);
         setComments(response.data);
     };
 

@@ -7,7 +7,6 @@ class UserAdmin(admin.ModelAdmin):
 
 class ProfileAdmin(admin.ModelAdmin):
     search_fields  = ['user']
-    list_display = ['image', 'user', 'full_name']
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ["title"]

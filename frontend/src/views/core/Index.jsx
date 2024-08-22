@@ -58,17 +58,6 @@ function Index() {
         Toast("success", response.data.message, "");
     };
 
-    const handleBookmarkPost = async (postId) => {
-        const jsonData = {
-            user_id: useUserData()?.user_id,
-            post_id: postId,
-        };
-        const response = await apiInstance.post(`post/bookmark-post/`, jsonData);
-        console.log(response.data);
-        fetchPosts();
-
-        Toast("success", response.data.message, "");
-    };
 
     return (
         <div>
@@ -98,13 +87,11 @@ function Index() {
                                     <div className="card-body px-3 pt-3">
                                         <h4 className="card-title">
                                             <Link to={`${p.slug}`} className="btn-link text-reset stretched-link fw-bold text-decoration-none">
-                                            {p.title?.length > 32 ? p.title.slice(0, 32) + "..." : p.title}
+                                                {p.title?.length > 32 ? p.title.slice(0, 32) + "..." : p.title}
 
                                             </Link>
                                         </h4>
-                                        <button type="button" onClick={() => handleBookmarkPost(p.id)} style={{ border: "none", background: "none" }}>
-                                            <i className="fas fa-bookmark text-danger"></i>
-                                        </button>
+
                                         <button onClick={() => handleLikePost(p.id)} style={{ border: "none", background: "none" }}>
                                             <i className="fas fa-thumbs-up text-primary"></i>
                                         </button>{" "}
@@ -210,7 +197,8 @@ function Index() {
                                     <div className="card-body px-3 pt-3">
                                         <h4 className="card-title">
                                             <Link to={`${p.slug}`} className="btn-link text-reset stretched-link fw-bold text-decoration-none">
-                                                {p.title?.slice(0, 32) + "..."}
+                                                {p.title?.length > 32 ? p.title.slice(0, 32) + "..." : p.title}
+
                                             </Link>
                                         </h4>
                                         <ul className="mt-3 list-style-none" style={{ listStyle: "none" }}>
@@ -231,32 +219,7 @@ function Index() {
                             </div>
                         ))}
                     </div>
-                    {/* <nav className="d-flex mt-2">
-                        <ul className="pagination">
-                            <li className="">
-                                <button className="page-link text-dark fw-bold me-1 rounded">
-                                    <i className="fas fa-arrow-left me-2" />
-                                    Previous
-                                </button>
-                            </li>
-                        </ul>
-                        <ul className="pagination">
-                            <li key={1} className="active">
-                                <button className="page-link text-dark fw-bold rounded">1</button>
-                            </li>
-                            <li key={2} className="ms-1">
-                                <button className="page-link text-dark fw-bold rounded">2</button>
-                            </li>
-                        </ul>
-                        <ul className="pagination">
-                            <li className={`totalPages`}>
-                                <button className="page-link text-dark fw-bold ms-1 rounded">
-                                    Next
-                                    <i className="fas fa-arrow-right ms-3 " />
-                                </button>
-                            </li>
-                        </ul>
-                    </nav> */}
+
                 </div>
             </section>
 

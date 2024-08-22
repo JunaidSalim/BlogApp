@@ -23,10 +23,10 @@ function Dashboard() {
         const post_res = await apiInstance.get(`author/dashboard/post-list/${userId}/`);
         setPosts(post_res.data);
 
-        const comment_res = await apiInstance.get(`author/dashboard/comment-list/`);
+        const comment_res = await apiInstance.get(`author/dashboard/comment-list/${userId}/`);
         setComments(comment_res.data);
 
-        const noti_res = await apiInstance.get(`author/dashboard/noti-list/${userId}/`);
+        const noti_res = await apiInstance.get(`author/dashboard/notification-list/${userId}/`);
         setNoti(noti_res.data);
     };
 
@@ -35,7 +35,7 @@ function Dashboard() {
     }, []);
 
     const handleMarkNotiAsSeen = async (notiId) => {
-        const response = await apiInstance.post("author/dashboard/noti-mark-seen/", { noti_id: notiId });
+        const response = await apiInstance.post("author/dashboard/notification-mark-as-seen/", { noti_id: notiId });
         console.log(response.data);
         fetchDashboardData();
         Toast("success", "Notification Seen", "");

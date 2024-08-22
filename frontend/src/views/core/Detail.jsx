@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Header from "../partials/Header";
 import Footer from "../partials/Footer";
 import { Link, useParams } from "react-router-dom";
+import useUserData from "../../plugin/useUserData";
 
 import apiInstance from "../../utils/axios";
 import moment from "moment";
@@ -52,7 +53,29 @@ function Detail() {
             comment: "",
         });
     };
+    const handleLikePost = async () => {
+        const jsonData = {
+            user_id: useUserData()?.user_id,
+            post_id: post?.id
+        };
+        const response = await apiInstance.post(`post/like-post/`, jsonData);
+        console.log(response.data);
+        fetchPost();
 
+        Toast("success", response.data.message, "");
+    };
+
+    const handleBookmarkPost = async (postId) => {
+        const jsonData = {
+            user_id: useUserData()?.user_id,
+            post_id: post?.id,
+        };
+        const response = await apiInstance.post(`post/bookmark-post/`, jsonData);
+        console.log(response.data);
+        fetchPost();
+
+        Toast("success", response.data.message, "");
+    };
     return (
         <>
             <Header />
@@ -105,6 +128,7 @@ function Detail() {
                                         {post.views} Views
                                     </li>
                                 </ul>
+                              
                                 {/* Tags */}
                                 <ul className="list-inline text-primary-hover mt-0 mt-lg-3 text-start">
                                     {tags?.map((t, index) => (
@@ -115,6 +139,13 @@ function Detail() {
                                         </li>
                                     ))}
                                 </ul>
+
+                                <button onClick={handleLikePost} className="btn btn-primary">
+                                    <i className="fas fa-thumbs-up"></i>
+                                </button>
+                                <button onClick={handleBookmarkPost} className="btn btn-danger ms-2">
+                                    <i className="fas fa-bookmark"></i>
+                                </button>
                             </div>
                         </div>
                         {/* Left sidebar END */}
