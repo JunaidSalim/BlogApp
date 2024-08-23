@@ -26,7 +26,7 @@ function Footer() {
                         <ul className="list-unstyled d-flex justify-content-center justify-content-md-end mb-0">
                             <li className="ms-3">
                                 <a 
-                                    href="https://facebook.com/desphixs" 
+                                    href="https://github.com/JunaidSalim" 
                                     className="text-light fs-5" 
                                     target="_blank" 
                                     rel="noopener noreferrer"
@@ -36,7 +36,7 @@ function Footer() {
                             </li>
                             <li className="ms-3">
                                 <a 
-                                    href="https://twitter.com/desphixs" 
+                                    href="https://www.linkedin.com/in/junaid-saleem" 
                                     className="text-light fs-5" 
                                     target="_blank" 
                                     rel="noopener noreferrer"

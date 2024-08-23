@@ -24,57 +24,13 @@ Contact info START */}
                         <div className="col-xl-9 mx-auto">
                             <iframe
                                 className="w-100 h-300 grayscale"
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.9663095343008!2d-74.00425878428698!3d40.74076684379132!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259bf5c1654f3%3A0xc80f9cfce5383d5d!2sGoogle!5e0!3m2!1sen!2sin!4v1586000412513!5m2!1sen!2sin"
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13294.589128612777!2d71.52185015!3d34.01238455!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38d91001d5a5b6eb%3A0x43b57c00d02ec51c!2sPeshawar%2C%20Khyber%20Pakhtunkhwa%2C%20Pakistan!5e0!3m2!1sen!2s!4v1692800000000!5m2!1sen!2s"
                                 height={500}
                                 style={{ border: 0 }}
                                 aria-hidden="false"
                                 tabIndex={0}
                             />
-                            <div className="row mt-5">
-                                <div className="col-sm-6 mb-5 mb-sm-0">
-                                    <h3>Address Informations</h3>
-                                    <address>2492 Centennial NW, Acworth, GA, 30102</address>
-                                    <p>
-                                        Call:{" "}
-                                        <a href="#" className="text-reset">
-                                            <u>+123 4567 890 (Toll-free)</u>
-                                        </a>
-                                    </p>
-                                    <p>
-                                        Email:{" "}
-                                        <a href="#" className="text-reset">
-                                            <u>desphixs@gmail.com</u>
-                                        </a>
-                                    </p>
-                                    <p>
-                                        Support time: Monday to Saturday
-                                        <br />
-                                        9:30 am to 6:00 pm
-                                    </p>
-                                </div>
-                                <div className="col-sm-6">
-                                    <h3>Contact Information </h3>
-                                    <p>Get in touch with us to see how we can help you with your query</p>
-                                    <address>750 Sing Sing Rd, Horseheads, NY, 14845</address>
-                                    <p>
-                                        Call:{" "}
-                                        <a href="#" className="text-reset">
-                                            <u>+123 4567 890 (Toll-free)</u>
-                                        </a>
-                                    </p>
-                                    <p>
-                                        Email:{" "}
-                                        <a href="#" className="text-reset">
-                                            <u>desphixs@gmail.com</u>
-                                        </a>
-                                    </p>
-                                    <p>
-                                        Support time: Monday to Saturday
-                                        <br />
-                                        9:00 am to 5:30 pm
-                                    </p>
-                                </div>
-                            </div>
+
                             <hr className="my-5" />
                             <div className="row mb-5">
                                 <div className="col-12">
