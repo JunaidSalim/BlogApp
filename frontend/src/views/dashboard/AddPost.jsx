@@ -8,6 +8,8 @@ import useUserData from "../../plugin/useUserData";
 import Toast from "../../plugin/Toast";
 import Swal from "sweetalert2";
 
+import { useFetchPosts } from "../../hooks/useFetchPosts";
+
 function AddPost() {
     const [post, setCreatePost] = useState({ image: "", title: "", description: "", category: parseInt(""), tags: "", status: "" });
     const [imagePreview, setImagePreview] = useState("");
@@ -15,6 +17,7 @@ function AddPost() {
     const [isLoading, setIsLoading] = useState(false);
     const userId = useUserData()?.user_id;
     const navigate = useNavigate();
+    const { fetchPosts } = useFetchPosts();
 
     const fetchCategory = async () => {
         const response = await apiInstance.get(`post/category/list/`);
@@ -94,6 +97,7 @@ function AddPost() {
                 icon: "success",
                 title: "Post created successfully.",
             });
+            fetchPosts();
             navigate("/posts/");
         } catch (error) {
             setIsLoading(false);

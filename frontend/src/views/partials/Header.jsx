@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../../store/auth";
+import logo from '../../assets/logo.png'; // 
 
 function Header() {
     const [isLoggedIn, user] = useAuthStore((state) => [state.isLoggedIn, state.user]);
@@ -9,7 +10,7 @@ function Header() {
             <nav className="navbar navbar-expand-lg">
                 <div className="container">
                     <Link className="navbar-brand" to="/">
-                        <img className="navbar-brand-item dark-mode-item" src="https://i.postimg.cc/ZRNC1mhM/my-main-logo.png" style={{ width: "200px" }} alt="logo" />
+                        <img className="navbar-brand-item dark-mode-item" style={{ width: "200px", backgroundColor: "transparent" }} src={logo} alt="logo" />
                     </Link>
                     <button className="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="h6 d-none d-sm-inline-block text-white">Menu</span>

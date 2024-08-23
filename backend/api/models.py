@@ -50,7 +50,7 @@ class Profile(models.Model):
 
 def create_user_profile(sender,instance,created,**kwargs):
     if created:
-        Profile.objects.create(user=instance)
+        Profile.objects.create(user=instance,full_name = instance.full_name)
 
 def save_user_profile(sender,instance,**kwargs):
     instance.profile.save()
@@ -88,15 +88,15 @@ class Post(models.Model):
     user = models.ForeignKey(to=User,on_delete=models.CASCADE)
     profile = models.ForeignKey(to=Profile,on_delete=models.CASCADE,blank=True,null=True)
     category = models.ForeignKey(to=Category,blank=True,null=True,on_delete=models.CASCADE)
-    title = models.CharField(max_length=100)
-    tags = models.CharField(max_length=100,null=True,blank=True)
+    title = models.CharField(max_length=1000)
+    tags = models.CharField(max_length=1000,null=True,blank=True)
     description = models.TextField(null=True,blank=True)
     image = models.FileField(upload_to="image",null=True,blank=True)
     status = models.CharField(choices=STATUS_CHOICES,max_length=100,default="Active")
     views = models.IntegerField(default=0)
     likes = models.ManyToManyField(to=User,blank=True,related_name="likes_user")
     date = models.DateTimeField(auto_now_add=True)
-    slug = models.SlugField(unique=True,null=True,blank=True)
+    slug = models.SlugField(unique=True,null=True,blank=True,max_length=1000)
 
 
     class Meta:

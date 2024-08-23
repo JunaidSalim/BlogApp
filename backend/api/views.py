@@ -44,7 +44,7 @@ class ProfileView(generics.RetrieveUpdateAPIView):
     permission_classes = [AllowAny]
     serializer_class = api_serializer.ProfileSerializer
     
-    def get_obj(self):
+    def get_object(self):
         user_id = self.kwargs['user_id']
         user = api_models.User.objects.get(id=user_id)
         profile = api_models.Profile.objects.get(user=user)
@@ -67,7 +67,7 @@ class PostCategoryListAPIView(generics.ListAPIView):
     def get_queryset(self):
         category_slug = self.kwargs['category_slug']
         category = api_models.Category.objects.get(slug= category_slug)
-        return api_models.Post.objects.filter(category=category,status="Active")
+        return api_models.Post.objects.filter(category=category)
 
 
 class PostListAPIView(generics.ListAPIView):
@@ -75,7 +75,7 @@ class PostListAPIView(generics.ListAPIView):
     permission_classes = [AllowAny]
 
     def get_queryset(self):
-        return api_models.Post.objects.filter(status="Active")
+        return api_models.Post.objects.all()
     
 
 class PostDetailsAPIView(generics.RetrieveAPIView):
@@ -84,7 +84,7 @@ class PostDetailsAPIView(generics.RetrieveAPIView):
 
     def get_object(self):
         slug = self.kwargs['slug']
-        post = api_models.Post.objects.get(slug=slug,status="Active")
+        post = api_models.Post.objects.get(slug=slug)
         post.views+=1
         post.save()
         return post
@@ -300,10 +300,12 @@ class DashboardPostCreateAPIView(generics.CreateAPIView):
         post_status = request.data.get('post_status')
 
         user = api_models.User.objects.get(id=user_id)
+        profile = api_models.Profile.objects.get(user = user)
         category = api_models.Category.objects.get(id=category_id)
 
         api_models.Post.objects.create(
             user=user,
+            profile=profile,
             title=title,
             image=image,
             description=description,

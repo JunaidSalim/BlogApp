@@ -94,7 +94,7 @@ class PostSerializer(serializers.ModelSerializer):
         if request and request.method=='POST':
             self.Meta.depth = 0
         else:
-            self.Meta.depth = 1
+            self.Meta.depth = 3
 
 
 class BookmarkSerializer(serializers.ModelSerializer):
