@@ -9,12 +9,14 @@ import Toast from "../../plugin/Toast";
 import Swal from "sweetalert2";
 
 import { useFetchPosts } from "../../hooks/useFetchPosts";
+import axios from "axios";
 
 function AddPost() {
     const [post, setCreatePost] = useState({ image: "", title: "", description: "", category: parseInt(""), tags: "", status: "" });
     const [imagePreview, setImagePreview] = useState("");
     const [categoryList, setCategoryList] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [desc, setDesc] = useState("");
     const userId = useUserData()?.user_id;
     const navigate = useNavigate();
     const { fetchPosts } = useFetchPosts();
@@ -33,6 +35,14 @@ function AddPost() {
             ...post,
             [event.target.name]: event.target.value,
         });
+    };
+
+    const handleCreatePostDescChange = (event) => {
+        setCreatePost({
+            ...post,
+            [event.target.name]: event.target.value,
+        });
+        setDesc(event.target.value)
     };
 
     const handleFileChange = (event) => {
@@ -104,6 +114,43 @@ function AddPost() {
         }
     };
 
+    const GenerateAI = async (e) => {
+
+        let title = document.getElementById('title').value
+        let key = "" // Add your key here
+        if (!title) {
+            Toast("error", "Please Provide Title");
+            return;
+        }
+        let question = `Write a blog Article on ${title} in less than 500 words in plain multiple paragraphs without headings`
+
+        e.preventDefault();
+        setDesc("Generating... \nIt might take upto 10 seconds");
+        try {
+            const response = await axios({
+                url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${key}`,
+                method: "post",
+                data: {
+                    contents: [{ parts: [{ text: question }] }],
+                },
+            });
+
+            setDesc(
+                response["data"]["candidates"][0]["content"]["parts"][0]["text"]
+            );
+            setCreatePost((prevPost) => ({
+                ...prevPost,
+                description: response["data"]["candidates"][0]["content"]["parts"][0]["text"],
+            }))
+        } catch (error) {
+            console.log(error)
+            setDesc("Sorry - Something went wrong. Please try again!");
+        }
+
+
+
+    }
+
     return (
         <>
             <Header />
@@ -155,7 +202,7 @@ function AddPost() {
 
                                             <div className="mb-3">
                                                 <label className="form-label">Title</label>
-                                                <input onChange={handleCreatePostChange} name="title" className="form-control" type="text" placeholder="" />
+                                                <input onChange={handleCreatePostChange} name="title" className="form-control" type="text" id="title" placeholder="" />
                                                 <small>Write a 60 character post title.</small>
                                             </div>
                                             <div className="mb-3">
@@ -168,10 +215,12 @@ function AddPost() {
                                                 </select>
                                                 <small>Help people find your posts by choosing categories that represent your post.</small>
                                             </div>
-
+                                            <div>
+                                                <button type="button" onClick={GenerateAI} className="btn btn-success my-2">AI Generate</button>
+                                            </div>
                                             <div className="mb-3">
                                                 <label className="form-label">Post Description</label>
-                                                <textarea onChange={handleCreatePostChange} name="description" className="form-control" id="" cols="30" rows="10"></textarea>
+                                                <textarea onChange={handleCreatePostDescChange} value={desc} name="description" className="form-control" id="" cols="30" rows="10"></textarea>
                                                 <small>A brief summary of your posts.</small>
                                             </div>
                                             <label className="form-label">Tags</label>
