@@ -6,11 +6,16 @@ Our Blog Management Platform is a dynamic web application designed to empower us
 
 https://github.com/user-attachments/assets/35403c8d-ec64-4ec0-abfe-521e68089b9d
 
+https://github.com/user-attachments/assets/40a95831-9148-42e8-8eea-f9c98572fe8d
+
+
 
 
 ## Key Features
 
 - **User Authentication:** Easily register and log in to the platform, with secure authentication managed using JWT tokens. Personal data is protected with robust security measures.
+  
+- **AI Content Generation:** Integrated AI tools streamline the blog creation process, helping users generate high-quality content quickly.
   
 - **Dashboard:** Personalized dashboard displaying all your blog posts, including details such as title, content, author, and publication date.
 
